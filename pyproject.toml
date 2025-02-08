@@ -28,6 +28,8 @@ Repository = "https://github.com/gdevos010/Scalable-Softmax"
 
 [project.optional-dependencies]
 dev = [
-    "ruff"
+    "ruff",
+    "build",
+    "twine"
 ]
 
