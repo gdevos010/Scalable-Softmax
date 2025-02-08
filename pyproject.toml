@@ -20,10 +20,11 @@ classifiers=[
 
 dependencies = [
     "torch>=1.8",
+    "numpy>=1.23.5"
 ]
 
 [project.urls]
-Homepage = "https://github.com/gdevos010/Scalable-Softmax"
+Homepage = "https://pypi.org/project/scalable-softmax/"
 Repository = "https://github.com/gdevos010/Scalable-Softmax"
 
 [project.optional-dependencies]
