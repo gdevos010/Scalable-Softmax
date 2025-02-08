@@ -1,6 +1,6 @@
 # ScalableSoftmax
 
-An unofficial PyTorch implementation of Scalable-Softmax (Ssmax) from the paper "Scalable-Softmax Is Superior for Attention" (Nakanishi, 2025).
+An unofficial PyTorch implementation of Scalable-Softmax (Ssmax) from the paper "[Scalable-Softmax Is Superior for Attention](https://arxiv.org/pdf/2501.19399)" (Nakanishi, 2025).
 
 ## Overview
 
