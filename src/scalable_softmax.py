@@ -41,9 +41,10 @@ class ScalableSoftmax(nn.Module):
 
         # Optional bias parameter
         self.has_bias = bias
-        self.b = 0
         if bias:
             self.b = nn.Parameter(torch.zeros(1, dtype=torch.float32))
+        else:
+            self.register_buffer("b", torch.zeros(1, dtype=torch.float32))
 
     def forward(self, x: torch.Tensor, dim: int = -1) -> torch.Tensor:
         """Forward pass applying SSMax along specified dimension.
