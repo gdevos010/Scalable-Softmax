@@ -30,17 +30,20 @@ class ScalableSoftmax(nn.Module):
     def __init__(self, s: float = 0.43, learn_scaling: bool = True, bias: bool = False):
         super().__init__()
 
+        if s <= 0:
+            raise ValueError(f"Scaling parameter s must be positive, got {s}")
+
         # Initialize scaling parameter
         if learn_scaling:
-            self.s = nn.Parameter(torch.tensor(s, dtype=torch.float))
+            self.s = nn.Parameter(torch.tensor(s, dtype=torch.float32))
         else:
-            self.register_buffer("s", torch.tensor(s, dtype=torch.float))
+            self.register_buffer("s", torch.tensor(s, dtype=torch.float32))
 
         # Optional bias parameter
         self.has_bias = bias
         self.b = 0
         if bias:
-            self.b = nn.Parameter(torch.zeros(1))
+            self.b = nn.Parameter(torch.zeros(1, dtype=torch.float32))
 
     def forward(self, x: torch.Tensor, dim: int = -1) -> torch.Tensor:
         """Forward pass applying SSMax along specified dimension.
@@ -52,13 +55,18 @@ class ScalableSoftmax(nn.Module):
         Returns:
             torch.Tensor: Output tensor with same shape as input
         """
+        # Compute log of sequence length
+        log_n = math.log(x.size(dim))
 
         # Apply scaling factor based on input size
-        scale = self.s * math.log(x.size(dim))
-        if self.has_bias:
-            scale += self.b
+        s = self.s.to(x.dtype)
+        scale = s * log_n
 
-        return F.softmax(x.mul(scale), dim=dim)
+        if self.has_bias:
+            b = self.b.to(x.dtype)
+            scale = scale + b
+
+        return F.softmax(x * scale, dim=dim)
 
     def extra_repr(self) -> str:
         """String representation of module."""

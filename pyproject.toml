@@ -1,6 +1,6 @@
 [project]
 name = "scalable_softmax"
-version = "0.1.3"
+version = "0.1.4"
 description = "PyTorch implementation of Scalable-Softmax for attention mechanisms"
 authors = [
     { name = "Greg DeVosNouri", email = "gdevos010@gamil.com" }
